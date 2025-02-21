@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[])
 {
-    std::string filename = "mesh.obj";
+    std::string filename = "shuttle.obj";
     if(argc > 1)
     {
         filename = argv[1];

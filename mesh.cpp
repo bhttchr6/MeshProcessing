@@ -114,7 +114,7 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
 
     // evaluate the slope of the line
     double slope = 0;
-    int numSteps = 10;
+    int numSteps = 100;
     if((point2.x > point1.x) && (point2.y > point1.y)) //quad 2
     {
         slope = (point2.y - point1.y) / (point2.x - point1.x);
@@ -123,7 +123,7 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
         {
             double x_i = point1.x + deltaX;
             double y_i = point1.y + slope * deltaX;
-            image_.set(x_i, y_i, lineColor); 
+            image_.set(x_i*width/2.0, y_i*height/2.0, lineColor); 
         }
     }
     else if ((point2.x > point1.x) && (point2.y < point1.y)) // quad 1
@@ -134,7 +134,7 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
         {
             double x_i = point1.x + deltaX;
             double y_i = point1.y + slope * deltaX;
-            image_.set(x_i, y_i, lineColor); 
+            image_.set(x_i*width/2.0, y_i*height/2.0, lineColor); 
         } 
     }
     else if ((point2.x < point1.x) && (point2.y > point1.y)) // quad 3
@@ -145,7 +145,7 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
         {
             double x_i = point1.x - deltaX;
             double y_i = point1.y - slope * deltaX;
-            image_.set(x_i, y_i, lineColor); 
+            image_.set(x_i*width/2.0, y_i*height/2.0, lineColor); 
         } 
 
     }
@@ -158,7 +158,7 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
         {
             double x_i = point1.x - deltaX;
             double y_i = point1.y + slope * deltaX;
-            image_.set(x_i, y_i, lineColor); 
+            image_.set(x_i*width/2.0, y_i*height/2.0, lineColor); 
         } 
 
     }
