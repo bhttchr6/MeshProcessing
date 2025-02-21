@@ -16,7 +16,7 @@ meshAnalyzer::meshAnalyzer()
 }
 
 // constructor
-meshAnalyzer::meshAnalyzer(std::string filename)
+meshAnalyzer::meshAnalyzer(std::string filename, bool flag)
 {
     
 
@@ -50,27 +50,34 @@ meshAnalyzer::meshAnalyzer(std::string filename)
 
             if(!line.compare(0, 2, "f "))
             {
-                /*
-                int vertexId1, vertexId2, vertexId3;
+                if(flag)
+                {
+                    //std::cout << "clean obj file provided" << std::endl;
+                    int vertexId1, vertexId2, vertexId3;
 
-                iss >> c >> vertexId1 >> vertexId2 >> vertexId3;
-                std::vector<int> vertexIds;
-                vertexIds.push_back(vertexId3--);
-                vertexIds.push_back(vertexId2--);
-                vertexIds.push_back(vertexId1--);
+                    iss >> c >> vertexId1 >> vertexId2 >> vertexId3;
+                    std::vector<int> vertexIds;
+                    vertexIds.push_back(vertexId3--);
+                    vertexIds.push_back(vertexId2--);
+                    vertexIds.push_back(vertexId1--);
 
-                vertexIdx_.push_back(vertexIds);
-                */
-                
-                
-               std::vector<int> f;
-                int itrash, idx;
-                iss >> c;
-                while (iss >> idx >> c >> itrash >> c >> itrash) {
-                    idx--; // in wavefront obj all indices start at 1, not zero
-                    f.push_back(idx);
+                    vertexIdx_.push_back(vertexIds);
                 }
-                vertexIdx_.push_back(f);
+                
+                
+                
+                if(!flag)
+                {
+                    std::vector<int> f;
+                    int itrash, idx;
+                    iss >> c;
+                    while (iss >> idx >> c >> itrash >> c >> itrash) {
+                        idx--; // in wavefront obj all indices start at 1, not zero
+                        f.push_back(idx);
+                    }
+                    vertexIdx_.push_back(f);
+                }
+                
                 
 
 
@@ -85,6 +92,7 @@ meshAnalyzer::meshAnalyzer(std::string filename)
     TGAImage image(width, height, TGAImage::RGB);
     image_ = image;
     scaleKnob_ = 100;
+    
     
 
 
@@ -219,6 +227,8 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
  {
     scaleKnob_ = scaleValue;
  }
+
+
 
  void meshAnalyzer::drawMesh( std::string color)
  {

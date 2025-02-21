@@ -12,7 +12,7 @@ class meshAnalyzer
 public:
 
     meshAnalyzer();
-    meshAnalyzer(std::string filename);
+    meshAnalyzer(std::string filename, bool flag);
     ~meshAnalyzer();
 
     
@@ -40,6 +40,7 @@ public:
     //set scale knob
     void setScaleKnob( double scaleValue);
 
+
 private:
 
     unsigned int numVertices_;
@@ -47,6 +48,7 @@ private:
     unsigned int numElems_;
     TGAImage image_;
     double scaleKnob_;
+    
 
 
     std::vector<vec3f> globalVertexCoords_;
