@@ -84,6 +84,7 @@ meshAnalyzer::meshAnalyzer(std::string filename)
     numFaces_ = vertexIdx_.size();
     TGAImage image(width, height, TGAImage::RGB);
     image_ = image;
+    scaleKnob_ = 100;
     
 
 
@@ -128,8 +129,10 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
     // evaluate the slope of the line
     double slope = 0;
     int numSteps = 100;
-    double scalex = width/400.0;
-   double scaley  = height/400.0;
+    // the scale knob is an important parameter
+    //double scaleKnob = 400.0;
+    double scalex = width/scaleKnob_;
+   double scaley  = height/scaleKnob_;
    point1.x = point1.x/scalex;
    point1.y = point1.y / scaley;
 
@@ -212,6 +215,11 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
     
  }
 
+ void meshAnalyzer::setScaleKnob(double scaleValue)
+ {
+    scaleKnob_ = scaleValue;
+ }
+
  void meshAnalyzer::drawMesh( std::string color)
  {
     
@@ -227,32 +235,7 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
             drawLine(coordIds1, coordIds2, color);
         }
     }
-    /*
-   double scalex = 1.0;
-   double scaley  = 1.0;
-    // in 3rd quad
-    vec3f coordIds1(-5.0/scalex, 1.0/scaley, 0.0);
-    vec3f coordIds2(-2.0/scalex, 2.0/scaley, 0.0);
-    drawLine(coordIds1, coordIds2, color);
-
-    // in 1rd quad
-    vec3f coordIds11(1.0/scalex, -1.0/scaley, 0.0);
-    vec3f coordIds21(2.0/scalex, -2.0/scaley, 0.0);
-    drawLine(coordIds11, coordIds21, color);
-
-    // in 2rd quad
-    vec3f coordIds12(1.0/scalex, 1.0/scaley, 0.0);
-    vec3f coordIds22(2.0/scalex, 2.0/scaley, 0.0);
-    drawLine(coordIds12, coordIds22, color);
-
-    // in 4rd quad
-    vec3f coordIds13(-1.0/scalex, -1.0/scaley, 0.0);
-    vec3f coordIds23(-2.0/scalex, -2.0/scaley, 0.0);
-    drawLine(coordIds13, coordIds23, color);
-    */
-
-
-
+    
 
     image_.flip_vertically(); // i want to have the origin at the left bottom corner of the image
     image_.write_tga_file("output.tga");

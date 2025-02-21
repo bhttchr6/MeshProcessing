@@ -37,12 +37,16 @@ public:
     //draw a line between two points
     void drawLine(vec3f p1, vec3f p2, std::string color);
 
+    //set scale knob
+    void setScaleKnob( double scaleValue);
+
 private:
 
     unsigned int numVertices_;
     unsigned int numFaces_;
     unsigned int numElems_;
     TGAImage image_;
+    double scaleKnob_;
 
 
     std::vector<vec3f> globalVertexCoords_;

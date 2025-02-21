@@ -8,7 +8,7 @@
 
 int main(int argc, char* argv[])
 {
-    std::string filename = "mesh.obj";
+    std::string filename = "head.obj";
     if(argc > 1)
     {
         filename = argv[1];
@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     std::cout << "Number of faces = " << mesh->getNFaces() << std::endl;
     std::cout << "Number of vertices = " << mesh->getNVertices() << std::endl;
 
-    
+    mesh->setScaleKnob(600);
     mesh->drawMesh("red");
 
     return 1;
