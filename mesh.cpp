@@ -6,8 +6,8 @@
 #include <iostream>
 #include <vector>
 
-#define width  800
-#define height  800
+#define width  1000
+#define height  1000
 
 // default constructor
 meshAnalyzer::meshAnalyzer() 
@@ -50,6 +50,7 @@ meshAnalyzer::meshAnalyzer(std::string filename)
 
             if(!line.compare(0, 2, "f "))
             {
+                /*
                 int vertexId1, vertexId2, vertexId3;
 
                 iss >> c >> vertexId1 >> vertexId2 >> vertexId3;
@@ -59,6 +60,15 @@ meshAnalyzer::meshAnalyzer(std::string filename)
                 vertexIds.push_back(vertexId1);
 
                 vertexIdx_.push_back(vertexIds);
+                */
+               std::vector<int> f;
+                int itrash, idx;
+                iss >> c;
+                while (iss >> idx >> c >> itrash >> c >> itrash) {
+                    idx--; // in wavefront obj all indices start at 1, not zero
+                    f.push_back(idx);
+                }
+                vertexIdx_.push_back(f);
 
 
             }
@@ -117,24 +127,37 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
     int numSteps = 100;
     if((point2.x > point1.x) && (point2.y > point1.y)) //quad 2
     {
+        //std::cout << "here in quad 1" <<std::endl;
         slope = (point2.y - point1.y) / (point2.x - point1.x);
         double deltaX = (point2.x - point1.x)/ numSteps;
         for(int i = 0; i < numSteps; i++)
         {
-            double x_i = point1.x + deltaX;
-            double y_i = point1.y + slope * deltaX;
+            double x_i = point1.x + i*deltaX;
+            //std::cout << x_i <<std::endl;
+            double y_i = point1.y + slope * i*deltaX;
+            //std::cout << y_i <<std::endl;
             image_.set(x_i*width/2.0, y_i*height/2.0, lineColor); 
         }
     }
     else if ((point2.x > point1.x) && (point2.y < point1.y)) // quad 1
     {
+        
         slope = (point2.y - point1.y) / (point2.x - point1.x);
         double deltaX = (point2.x - point1.x)/ numSteps;
+
+        //std::cout << "here in quad 1" <<std::endl;
+        //std::cout << "slope " << slope <<std::endl;
+        //std::cout << "deltaX" <<  deltaX <<std::endl;
         for(int i = 0; i < numSteps; i++)
         {
-            double x_i = point1.x + deltaX;
-            double y_i = point1.y + slope * deltaX;
-            image_.set(x_i*width/2.0, y_i*height/2.0, lineColor); 
+            double x_i = point1.x + i * deltaX;
+            double y_i = point1.y + slope * i * deltaX;
+            x_i = x_i < 0 ? x_i*width/2.0 + width: x_i*width/2.0;
+            y_i = y_i < 0 ? y_i*height/2.0 + height: y_i*height/2.0;
+
+            //std::cout << x_i <<std::endl;
+            //std::cout << y_i <<std::endl;
+            image_.set(x_i, y_i, lineColor); 
         } 
     }
     else if ((point2.x < point1.x) && (point2.y > point1.y)) // quad 3
@@ -143,9 +166,12 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
         double deltaX = std::abs((point2.x - point1.x)/ numSteps);
         for(int i = 0; i < numSteps; i++)
         {
-            double x_i = point1.x - deltaX;
-            double y_i = point1.y - slope * deltaX;
-            image_.set(x_i*width/2.0, y_i*height/2.0, lineColor); 
+            double x_i = point1.x - i * deltaX;
+            double y_i = point1.y - slope * i * deltaX;
+
+            x_i = x_i < 0 ? x_i*width/2.0 + width: x_i*width/2.0;
+            y_i = y_i < 0 ? y_i*height/2.0 + height: y_i*height/2.0;
+            image_.set(x_i, y_i, lineColor); 
         } 
 
     }
@@ -156,19 +182,21 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
         double deltaX = std::abs((point2.x - point1.x)/ numSteps);
         for(int i = 0; i < numSteps; i++)
         {
-            double x_i = point1.x - deltaX;
-            double y_i = point1.y + slope * deltaX;
-            image_.set(x_i*width/2.0, y_i*height/2.0, lineColor); 
+            double x_i = point1.x - i * deltaX;
+            double y_i = point1.y - slope * i * deltaX;
+            x_i = x_i < 0 ? x_i*width/2.0 + width: x_i*width/2.0;
+            y_i = y_i < 0 ? y_i*height/2.0 + height: y_i*height/2.0;
+            image_.set(x_i, y_i, lineColor); 
         } 
 
     }
     
-
     
  }
 
  void meshAnalyzer::drawMesh( std::string color)
  {
+    
     // go to each face
     for(unsigned int i = 0; i<numFaces_; i++)
     {
@@ -181,9 +209,14 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
             drawLine(coordIds1, coordIds2, color);
         }
     }
-
+    
+    
+    //vec3f coordIds1(-1.0, 1.0, 0.0);
+    //vec3f coordIds2(-2.0, 2.0, 0.0);
+    //drawLine(coordIds1, coordIds2, color);
     image_.flip_vertically(); // i want to have the origin at the left bottom corner of the image
     image_.write_tga_file("output.tga");
+    
  }
 
  

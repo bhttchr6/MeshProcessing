@@ -9,3 +9,4 @@ struct  vec3
     vec3(): x(0.f), y(0.f), z(0.f){};
     vec3(T x_, T y_, T z_): x(x_), y(y_), z(z_) {};
 };
+

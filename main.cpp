@@ -5,9 +5,10 @@
 #include "mesh.hpp"
 
 
+
 int main(int argc, char* argv[])
 {
-    std::string filename = "shuttle.obj";
+    std::string filename = "mesh.obj";
     if(argc > 1)
     {
         filename = argv[1];
@@ -19,7 +20,8 @@ int main(int argc, char* argv[])
     std::cout << "Number of faces = " << mesh->getNFaces() << std::endl;
     std::cout << "Number of vertices = " << mesh->getNVertices() << std::endl;
 
-    mesh->drawMesh("red");
+    
+    mesh->drawMesh("white");
 
     return 1;
 }
