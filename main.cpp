@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
     std::cout << "Number of vertices = " << mesh->getNVertices() << std::endl;
 
     
-    mesh->drawMesh("white");
+    mesh->drawMesh("red");
 
     return 1;
 }
