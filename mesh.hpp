@@ -1,6 +1,7 @@
 #pragma once
 
 #include "utils.hpp"
+#include "tgaimage.h"
 #include <string>
 #include <vector>
 
@@ -30,11 +31,18 @@ public:
     // get the indices associated with a faceId
     std::vector<int> getVertexIdsForFace(unsigned int faceIdx);
 
+    // draw the mesh
+    void drawMesh(std::string color);
+
+    //draw a line between two points
+    void drawLine(vec3f p1, vec3f p2, std::string color);
+
 private:
 
     unsigned int numVertices_;
     unsigned int numFaces_;
     unsigned int numElems_;
+    TGAImage image_;
 
 
     std::vector<vec3f> globalVertexCoords_;

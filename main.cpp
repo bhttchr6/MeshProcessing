@@ -19,5 +19,7 @@ int main(int argc, char* argv[])
     std::cout << "Number of faces = " << mesh->getNFaces() << std::endl;
     std::cout << "Number of vertices = " << mesh->getNVertices() << std::endl;
 
+    mesh->drawMesh("red");
+
     return 1;
 }
