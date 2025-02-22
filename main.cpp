@@ -44,11 +44,6 @@ int main(int argc, char* argv[])
     mesh2->setScaleKnob(100); // 600 for head
     mesh2->drawMesh("white");
 
-    
-
-    //mesh1->sceneFinalize("mesh1.tga");
-    //mesh2->sceneFinalize("mesh2.tga");
-    // Save final image
     mesh1->saveImage("output.tga");
     
     return 1;
