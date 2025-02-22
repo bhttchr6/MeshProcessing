@@ -1,22 +1,23 @@
 #include "mesh.hpp"
 #include "tgaimage.h"
+
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <vector>
 
-#define width  800
-#define height  800
+#define width  1920
+#define height  1080
 
 // default constructor
-meshAnalyzer::meshAnalyzer() 
+meshAnalyzer::meshAnalyzer():scene()
 {
     throw std::invalid_argument(" Mesh not defined");
 }
 
 // constructor
-meshAnalyzer::meshAnalyzer(std::string filename, bool flag)
+meshAnalyzer::meshAnalyzer(std::string filename, bool flag, TGAImage &image):scene(image)
 {
     
 
@@ -89,8 +90,8 @@ meshAnalyzer::meshAnalyzer(std::string filename, bool flag)
     numElems_ = vertexIdx_.size();
     numVertices_ = globalVertexCoords_.size();
     numFaces_ = vertexIdx_.size();
-    TGAImage image(width, height, TGAImage::RGB);
-    image_ = image;
+    //TGAImage image(width, height, TGAImage::RGB);
+    //image_ = image;
     scaleKnob_ = 100;
     
     
@@ -247,8 +248,8 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
     }
     
 
-    image_.flip_vertically(); // i want to have the origin at the left bottom corner of the image
-    image_.write_tga_file("output.tga");
+    //image_.flip_vertically(); // i want to have the origin at the left bottom corner of the image
+    //image_.write_tga_file("output.tga");
     
  }
 

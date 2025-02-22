@@ -2,18 +2,19 @@
 
 #include "utils.hpp"
 #include "tgaimage.h"
+#include "scene.hpp"
 #include <string>
 #include <vector>
 
 typedef vec3<float> vec3f;
 
-class meshAnalyzer
+class meshAnalyzer: public scene
 {
 public:
 
     meshAnalyzer();
-    meshAnalyzer(std::string filename, bool flag);
-    ~meshAnalyzer();
+    meshAnalyzer(std::string filename, bool flag, TGAImage &image);
+    virtual ~meshAnalyzer();
 
     
     // get number of elements
@@ -46,7 +47,6 @@ private:
     unsigned int numVertices_;
     unsigned int numFaces_;
     unsigned int numElems_;
-    TGAImage image_;
     double scaleKnob_;
     
 

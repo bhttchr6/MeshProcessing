@@ -3,27 +3,48 @@
 #include <memory>
 #include "utils.hpp"
 #include "mesh.hpp"
+#include "scene.hpp"
 
-
+#define width  1920
+#define height  1080
 
 int main(int argc, char* argv[])
 {
-    std::string filename = "shuttle.obj";
-    bool cleanOBJ = false;
+    
+    TGAImage image(width, height, TGAImage::RGB);
+    //scene canvas(image);
+    
+
+    std::string filename1 = "head.obj";
+    std::string filename2 = "shuttle.obj";
+    bool cleanOBJ1 = false;
+    bool cleanOBJ2 = true;
     if(argc > 1)
     {
-        filename = argv[1];
+        filename1 = argv[1];
     }
     
     // create memory location
-    std::unique_ptr<meshAnalyzer> mesh  = std::make_unique<meshAnalyzer>(filename, cleanOBJ);
+    std::unique_ptr<meshAnalyzer> mesh1  = std::make_unique<meshAnalyzer>(filename1, cleanOBJ1, image);
+    std::unique_ptr<meshAnalyzer> mesh2  = std::make_unique<meshAnalyzer>(filename2, cleanOBJ2, image);
     
-    std::cout << "Number of faces = " << mesh->getNFaces() << std::endl;
-    std::cout << "Number of vertices = " << mesh->getNVertices() << std::endl;
+    std::cout << "Number of faces = " << mesh1->getNFaces() << std::endl;
+    std::cout << "Number of vertices = " << mesh1->getNVertices() << std::endl;
+
+    std::cout << "Number of faces = " << mesh2->getNFaces() << std::endl;
+    std::cout << "Number of vertices = " << mesh2->getNVertices() << std::endl;
 
     
-    mesh->setScaleKnob(600);
-    mesh->drawMesh("red");
+    mesh1->setScaleKnob(600); // 600 for head
+    mesh1->drawMesh("red");
 
+    mesh2->setScaleKnob(100); // 600 for head
+    mesh2->drawMesh("white");
+
+    
+
+    mesh1->sceneFinalize("mesh1.tga");
+    mesh2->sceneFinalize("mesh2.tga");
+    
     return 1;
 }
