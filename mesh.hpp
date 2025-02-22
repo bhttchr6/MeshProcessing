@@ -5,6 +5,7 @@
 #include "scene.hpp"
 #include <string>
 #include <vector>
+#include <memory>
 
 typedef vec3<float> vec3f;
 
@@ -13,7 +14,7 @@ class meshAnalyzer: public scene
 public:
 
     meshAnalyzer();
-    meshAnalyzer(std::string filename, bool flag, TGAImage &image);
+    meshAnalyzer(std::string filename, bool flag, std::shared_ptr<scene> scenePtr);
     virtual ~meshAnalyzer();
 
     
@@ -41,13 +42,17 @@ public:
     //set scale knob
     void setScaleKnob( double scaleValue);
 
+    void saveImage(const std::string& filename);  // New function to save image
+
 
 private:
+
 
     unsigned int numVertices_;
     unsigned int numFaces_;
     unsigned int numElems_;
     double scaleKnob_;
+    std::shared_ptr<scene> sharedScene_;  // Shared scene instance
     
 
 

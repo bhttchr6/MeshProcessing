@@ -12,9 +12,10 @@ int main(int argc, char* argv[])
 {
     
     TGAImage image(width, height, TGAImage::RGB);
+    std::shared_ptr<scene> sharedScene = std::make_shared<scene>(image);
     //scene canvas(image);
     
-
+    
     std::string filename1 = "head.obj";
     std::string filename2 = "shuttle.obj";
     bool cleanOBJ1 = false;
@@ -25,8 +26,10 @@ int main(int argc, char* argv[])
     }
     
     // create memory location
-    std::unique_ptr<meshAnalyzer> mesh1  = std::make_unique<meshAnalyzer>(filename1, cleanOBJ1, image);
-    std::unique_ptr<meshAnalyzer> mesh2  = std::make_unique<meshAnalyzer>(filename2, cleanOBJ2, image);
+    
+    std::unique_ptr<meshAnalyzer> mesh1  = std::make_unique<meshAnalyzer>(filename1, cleanOBJ1, sharedScene);
+    
+    std::unique_ptr<meshAnalyzer> mesh2  = std::make_unique<meshAnalyzer>(filename2, cleanOBJ2, sharedScene);
     
     std::cout << "Number of faces = " << mesh1->getNFaces() << std::endl;
     std::cout << "Number of vertices = " << mesh1->getNVertices() << std::endl;
@@ -43,8 +46,10 @@ int main(int argc, char* argv[])
 
     
 
-    mesh1->sceneFinalize("mesh1.tga");
-    mesh2->sceneFinalize("mesh2.tga");
+    //mesh1->sceneFinalize("mesh1.tga");
+    //mesh2->sceneFinalize("mesh2.tga");
+    // Save final image
+    mesh1->saveImage("output.tga");
     
     return 1;
 }

@@ -16,3 +16,8 @@ void scene::sceneFinalize(const std::string& filename)
 
     
 }
+
+TGAImage& scene::getCanvas()
+{
+    return image_;
+}

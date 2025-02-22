@@ -6,18 +6,20 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include <memory>
 
 #define width  1920
 #define height  1080
 
 // default constructor
-meshAnalyzer::meshAnalyzer():scene()
+
+meshAnalyzer::meshAnalyzer():sharedScene_(nullptr)
 {
     throw std::invalid_argument(" Mesh not defined");
 }
 
 // constructor
-meshAnalyzer::meshAnalyzer(std::string filename, bool flag, TGAImage &image):scene(image)
+meshAnalyzer::meshAnalyzer(std::string filename, bool flag, std::shared_ptr<scene> scenePtr):sharedScene_(scenePtr), scene(*scenePtr)
 {
     
 
@@ -135,6 +137,7 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
  {
     TGAColor lineColor = color == "red" ? TGAColor(255, 0,   0,   255): TGAColor(255, 255, 255,  255);
 
+    
     // evaluate the slope of the line
     double slope = 0;
     int numSteps = 100;
@@ -160,7 +163,8 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
             //std::cout << y_i <<std::endl;
             x_i = (x_i + 1)* width/2;
             y_i = (y_i + 1)* height/2;
-            image_.set(x_i, y_i, lineColor); 
+            
+            sharedScene_->getCanvas().set(x_i, y_i, lineColor); 
         }
     }
     else if ((point2.x > point1.x) && (point2.y < point1.y)) // quad 1
@@ -183,7 +187,7 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
 
             //std::cout << x_i <<std::endl;
             //std::cout << y_i <<std::endl;
-            image_.set(x_i, y_i, lineColor); 
+            sharedScene_->getCanvas().set(x_i, y_i, lineColor); 
         } 
     }
     else if ((point2.x < point1.x) && (point2.y > point1.y)) // quad 3
@@ -199,7 +203,7 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
             //y_i = y_i < 0 ? y_i*height/2.0 + height: y_i*height/2.0;
             x_i = (x_i + 1)* width/2;
             y_i = (y_i + 1)* height/2;
-            image_.set(x_i, y_i, lineColor); 
+            sharedScene_->getCanvas().set(x_i, y_i, lineColor); 
         } 
 
     }
@@ -216,7 +220,7 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
             //y_i = y_i < 0 ? y_i*height/2.0 + height: y_i*height/2.0;
             x_i = (x_i + 1)* width/2;
             y_i = (y_i + 1)* height/2;
-            image_.set(x_i, y_i, lineColor); 
+            sharedScene_->getCanvas().set(x_i, y_i, lineColor); 
         } 
 
     }
@@ -252,6 +256,10 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
     //image_.write_tga_file("output.tga");
     
  }
+
+ void meshAnalyzer::saveImage(const std::string& filename) {
+    sharedScene_->sceneFinalize(filename);
+}
 
  
 
