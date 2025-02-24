@@ -95,6 +95,26 @@ meshAnalyzer::meshAnalyzer(std::string filename, bool flag, std::shared_ptr<scen
     //TGAImage image(width, height, TGAImage::RGB);
     //image_ = image;
     scaleKnob_ = 100;
+
+    // evaluate the center of mass
+    float xCOM = 0, yCOM = 0, zCOM = 0; 
+    for(unsigned int i = 0; i < globalVertexCoords_.size(); i++)
+    {
+        vec3f vertexCoordinates = globalVertexCoords_[i];
+        float xCoords = vertexCoordinates.x;
+        float yCoords = vertexCoordinates.y;
+        float zCoords = vertexCoordinates.z;
+
+        xCOM = xCOM + xCoords;
+        yCOM = yCOM + yCoords;
+        zCOM = zCOM + zCoords;
+
+    }
+
+    vec3f centerOfMass_;
+    centerOfMass_.x = xCOM / globalVertexCoords_.size();
+    centerOfMass_.y = yCOM / globalVertexCoords_.size();
+    centerOfMass_.z = zCOM / globalVertexCoords_.size();
     
     
 
@@ -131,6 +151,11 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
     std::vector<int> vids = vertexIdx_[faceIdx];
     return vids;
 
+ }
+
+ vec3f meshAnalyzer::getCenterOfMass()
+ {
+    return centerOfMass_;
  }
 
  void meshAnalyzer::drawLine(vec3f point1, vec3f point2, std::string color)

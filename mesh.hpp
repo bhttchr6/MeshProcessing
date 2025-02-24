@@ -44,10 +44,12 @@ public:
 
     void saveImage(const std::string& filename);  // New function to save image
 
+    vec3f getCenterOfMass();
+
 
 private:
 
-
+    vec3f centerOfMass_;
     unsigned int numVertices_;
     unsigned int numFaces_;
     unsigned int numElems_;
