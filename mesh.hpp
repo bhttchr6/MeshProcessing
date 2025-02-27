@@ -48,6 +48,8 @@ public:
 
     void drawCOM();
 
+    void drawBoundingBox(std::string color);
+
 
 private:
 

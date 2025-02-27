@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
 
     mesh2->setScaleKnob(100); // 600 for head
     mesh2->drawMesh("white");
+    mesh2->drawBoundingBox("white");
 
     mesh1->saveImage("output.tga");
     

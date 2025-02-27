@@ -292,9 +292,37 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
     * theta = azimutha angle    
     */
 
-    double phi = 2*M_PI / N; 
+    //double phi = 2*M_PI / N; 
  }
 
+void meshAnalyzer::drawBoundingBox(std::string color)
+{
+    
+    vec3f p1, p2, p3, p4, p5, p6, p7, p8;
+    p1.x = xMin_; p1.y = yMin_; p1.z = zMax_;
+    p2.x = xMax_; p2.y = yMin_; p2.z = zMax_;
+    p3.x = xMax_; p3.y = yMax_; p3.z = zMax_;
+    p4.x = xMin_; p4.y = yMax_; p4.z = zMax_;
+
+    p5.x = xMin_; p5.y = yMin_; p5.z = zMax_;
+    p6.x = xMax_; p6.y = yMin_; p6.z = zMax_;
+    p7.x = xMax_; p7.y = yMax_; p7.z = zMax_;
+    p8.x = xMin_; p8.y = yMax_; p8.z = zMax_;
+
+    std::cout << p1.x << p1.y << p1.z << std::endl;
+    std::cout << p2.x << p2.y << p2.z << std::endl;
+
+    drawLine(p1, p2, color);
+    drawLine(p2, p3, color);
+    drawLine(p3, p4, color);
+    drawLine(p4, p1, color);
+
+    drawLine(p5, p6, color);
+    drawLine(p6, p7, color);
+    drawLine(p7, p8, color);
+    drawLine(p8, p5, color);
+    
+}
 
  void meshAnalyzer::drawMesh( std::string color)
  {
