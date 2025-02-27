@@ -109,6 +109,29 @@ meshAnalyzer::meshAnalyzer(std::string filename, bool flag, std::shared_ptr<scen
         yCOM = yCOM + yCoords;
         zCOM = zCOM + zCoords;
 
+        // get the max and min coords
+        if(i == 0) // if the very first index
+        {
+            xMin_ = xCoords;
+            yMin_ = yCoords;
+            zMin_= zCoords;
+
+            xMax_ = xCoords;
+            yMax_ = yCoords;
+            zMax_= zCoords;
+
+        }
+
+        xMin_ = xCoords<xMin_ ? xCoords: xMin_;
+        xMax_ = xCoords>xMax_ ? xCoords: xMax_;
+
+        yMin_ = yCoords<yMin_ ? yCoords: yMin_;
+        yMax_ = yCoords>yMax_ ? yCoords: yMax_;
+
+        zMin_ = zCoords<zMin_ ? zCoords: zMin_;
+        zMax_ = zCoords>zMax_ ? zCoords: zMax_;
+
+
     }
 
     vec3f centerOfMass_;
@@ -258,6 +281,19 @@ vec3f meshAnalyzer::getIndividualVertexCoord(unsigned int vertexIdx)
     scaleKnob_ = scaleValue;
  }
 
+ void meshAnalyzer::drawCOM()
+ {
+    /*
+    * using the parametric equation of sphere
+    * x = x_c + r * sin(phi) * cos(theta)
+    * y = y_c + r * sin(phi) * sin (theta)
+    * z = z_c + r * cos(phi)
+    * phi = polar angle
+    * theta = azimutha angle    
+    */
+
+    double phi = 2*M_PI / N; 
+ }
 
 
  void meshAnalyzer::drawMesh( std::string color)

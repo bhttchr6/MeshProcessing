@@ -46,6 +46,8 @@ public:
 
     vec3f getCenterOfMass();
 
+    void drawCOM();
+
 
 private:
 
@@ -54,6 +56,9 @@ private:
     unsigned int numFaces_;
     unsigned int numElems_;
     double scaleKnob_;
+    // get the bounding box coordinates
+    double xMax_, yMax_, zMax_;
+    double xMin_, yMin_, zMin_;
     std::shared_ptr<scene> sharedScene_;  // Shared scene instance
     
 
